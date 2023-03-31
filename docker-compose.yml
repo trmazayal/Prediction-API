@@ -2,15 +2,15 @@ version: "3.9"
 
 services:  
   rabbitmq:
-    container_name: rabbitmq
     image: rabbitmq:3-management
+    container_name: rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
   
   redis:
-    container_name: redis                                                            
     image: redis
+    container_name: redis                                                            
     ports:
       - "6379:6379"
 
@@ -25,10 +25,10 @@ services:
     ports:
       - "8080:8080"
 
-  webapp:
-    container_name: webapp
+  frontend:
+    container_name: frontend
     build: 
-      dockerfile: webapp/Dockerfile
+      dockerfile: frontend/Dockerfile
       context: .
     command: sh -c "cd /app && uvicorn app:app --host 0.0.0.0 --port 80 --reload"
     ports:
