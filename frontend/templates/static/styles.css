@@ -2,7 +2,7 @@ h2 {
 	font-size: 30px;
 	text-align: center;
 	width: 100%;
-	background: #1462dc;
+	background: #f1c232;
 	padding: 13px;
 	line-height: 30px;
 	color: white;
@@ -67,3 +67,17 @@ textarea {
 #row_detail {
 	margin-top: 20px;
 }
+
+.wrapper {
+    text-align: center;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+}
+
+.center-table {
+	margin-left: auto;
+	margin-right: auto;
+  }

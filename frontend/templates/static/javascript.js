@@ -71,12 +71,11 @@ jQuery(document).ready(function () {
     $(document).on('click', '#btn-view', function (e) {
         id = $(e.target).attr('data')
         $.get(results[id], function (data) {
-            res = data
             if (data['status'] == 'SUCCESS') {
                 $('#row_detail').show()
-                $('#result_txt').val(JSON.stringify(res.result['bbox'], undefined, 4))
-                $('#result_img').attr('src', URL + '/' + res.result.file_name)
-                $('#result_link').attr('href', URL + '/' + res.result.file_name)
+                $('#result_txt').val(JSON.stringify(data.result['bbox'], undefined, 4))
+                $('#result_img').attr('src', URL + '/' + data.result.file_name)
+                $('#result_link').attr('href', URL + '/' + data.result.file_name)
             } else {
                 alert('Result not ready or already consumed!')
                 $('#row_detail').hide()
