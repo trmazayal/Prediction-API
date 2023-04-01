@@ -25,7 +25,7 @@ if not isdir:
     os.makedirs(STATIC_FOLDER)
 
 origins = [
-    "http://localhost:5050",
+    "http://localhost",
     "http://localhost:8080"
 ]
 
