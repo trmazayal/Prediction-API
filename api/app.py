@@ -24,16 +24,12 @@ isdir = os.path.isdir(STATIC_FOLDER)
 if not isdir:
     os.makedirs(STATIC_FOLDER)
 
-origins = [
-    "http://localhost",
-    "http://localhost:8080"
-]
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory=STATIC_FOLDER), name="static")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
