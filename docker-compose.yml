@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 
 services:  
   rabbitmq:
@@ -12,18 +12,18 @@ services:
     image: redis
     container_name: redis                                                            
     ports:
-      - "6379:6379"
+      - 6379:6379
 
   worker:
     container_name: worker
     build:
       dockerfile: api/Dockerfile
       context: .
-    command: sh -c "cd api && uvicorn app:app --host 0.0.0.0 --port 8080 & cd ../ & celery -A celery_tasks.app_worker worker -l INFO --pool=solo"
+    command: sh -c "cd api && uvicorn app:app --host 0.0.0.0 --port 80 & cd ../ & celery -A celery_tasks.app_worker worker -l INFO --pool=solo"
     volumes:
       - .:/app
     ports:
-      - "8080:8080"
+      - 8080:80
 
   frontend:
     container_name: frontend
@@ -32,4 +32,4 @@ services:
       context: .
     command: sh -c "cd /app && uvicorn app:app --host 0.0.0.0 --port 80 --reload"
     ports:
-      - "80:80"
+      - 8081:80

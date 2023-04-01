@@ -25,8 +25,8 @@ if not isdir:
     os.makedirs(STATIC_FOLDER)
 
 origins = [
-    "http://localhost",
-    "http://localhost:8080",
+    "http://localhost:5050",
+    "http://localhost:8080"
 ]
 
 app = FastAPI()
