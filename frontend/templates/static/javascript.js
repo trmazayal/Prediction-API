@@ -1,5 +1,5 @@
-var URL = 'http://localhost:8080'
-var URL_STATUS = 'http://localhost:8080/api/status/'
+var URL = 'http://localhost:8080' // change this to your server address
+var URL_STATUS = 'http://localhost:8080/api/status/' // change this to your server address
 var results = []
 var status_list = []
 var res = ''

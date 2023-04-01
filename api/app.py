@@ -35,6 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get('/')
+def Home():
+    return "Service is Running..."
 
 @app.post('/api/process')
 async def process(files: List[UploadFile] = File(...)):
@@ -61,10 +64,14 @@ async def process(files: List[UploadFile] = File(...)):
                 d['status'] = 'ERROR'
                 d['url_result'] = ''
             tasks.append(d)
-        return JSONResponse(status_code=202, content=tasks)
+        return JSONResponse(status_code=202, 
+                            content=tasks
+                            )
     except Exception as ex:
         logging.info(ex)
-        return JSONResponse(status_code=400, content=[])
+        return JSONResponse(status_code=400, 
+                            content=[]
+                            )
 
 
 @app.get('/api/result/{task_id}', response_model=Prediction)
@@ -73,15 +80,35 @@ async def result(task_id: str):
 
     # Task Not Ready
     if not task.ready():
-        return JSONResponse(status_code=202, content={'task_id': str(task_id), 'status': task.status, 'result': ''})
+        return JSONResponse(status_code=202, 
+                            content={'task_id': str(task_id), 
+                                     'status': task.status, 
+                                     'result': ''}
+                            )
 
     # Task done: return the value
     task_result = task.get()
     result = task_result.get('result')
-    return JSONResponse(status_code=200, content={'task_id': str(task_id), 'status': task_result.get('status'), 'result': result})
+    return JSONResponse(status_code=200, 
+                        content={'task_id': str(task_id), 
+                                 'status': task_result.get('status'), 
+                                 'result': result}
+                        )
 
 
 @app.get('/api/status/{task_id}', response_model=Prediction)
 async def status(task_id: str):
     task = AsyncResult(task_id)
-    return JSONResponse(status_code=200, content={'task_id': str(task_id), 'status': task.status, 'result': ''})
+    return JSONResponse(status_code=200, 
+                        content={'task_id': str(task_id), 
+                                 'status': task.status, 
+                                 'result': ''}
+                        )
+
+@app.exception_handler(Exception)
+def validation_exception_handler(request, err):
+    base_error_message = f"Failed to execute: {request.method}: {request.url}"
+    context = {"message": f"{base_error_message}. Detail: {err}"}
+    return JSONResponse(status_code=400,
+                        content=context
+                        )
