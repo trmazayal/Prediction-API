@@ -1,5 +1,8 @@
-import sys
 import os
+import sys
+import uuid
+import logging
+import numpy as np
 sys.path.insert(0, os.path.realpath(os.path.pardir))
 from fastapi import FastAPI, File, UploadFile
 from fastapi.staticfiles import StaticFiles
@@ -8,10 +11,7 @@ from fastapi.responses import JSONResponse
 from celery_tasks.tasks import predict_image
 from celery.result import AsyncResult
 from models import Task, Prediction
-import uuid
-import logging
 from pydantic.typing import List
-import numpy as np
 
 UPLOAD_FOLDER = 'uploads'
 STATIC_FOLDER = 'static/results'
@@ -36,7 +36,7 @@ app.add_middleware(
 )
 
 @app.get('/')
-def Home():
+def home():
     return "Service is Running..."
 
 @app.post('/api/process')
